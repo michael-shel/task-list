@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -15,18 +15,25 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterSerializer } from './tasks/store/router-serializer';
 import { TaskListComponent } from './tasks/components/task-list/task-list.component';
 import { TaskComponent } from './tasks/components/task/task.component';
+import { DynamicInputComponent } from './components/dynamic-field/dynamic-input/dynamic-input.component';
+import { DynamicFieldComponent } from './components/dynamic-field/dynamic-field.component';
+import { DynamicErrorComponent } from './components/dynamic-error/dynamic-error.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskListComponent,
-    TaskComponent
+    TaskComponent,
+    DynamicInputComponent,
+    DynamicFieldComponent,
+    DynamicErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([TasksEffects]),

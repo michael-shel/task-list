@@ -8,9 +8,6 @@ import {
 } from "@angular/core";
 import {FormGroup} from "@angular/forms";
 import {DynamicInputComponent} from "./dynamic-input/dynamic-input.component";
-import {DynamicSelectComponent} from "./dynamic-select/dynamic-select.component";
-import {DynamicRadioComponent} from "./dynamic-radio/dynamic-radio.component";
-import {DynamicCheckboxsComponent} from "./dynamic-checkboxs/dynamic-checkboxs.component";
 
 @Component({
   selector: "app-field-input",
@@ -29,20 +26,8 @@ export class DynamicFieldComponent implements AfterViewInit{
       component: DynamicInputComponent
     },
     {
-      name: 'select',
-      component: DynamicSelectComponent
-    },
-    {
-      name: 'radio',
-      component: DynamicRadioComponent
-    },
-    {
       name: 'date',
       component: DynamicInputComponent
-    },
-    {
-      name: 'checkbox',
-      component: DynamicCheckboxsComponent
     }
   ]
   @ViewChild('dynamicInputContainer', { read: ViewContainerRef}) dynamicInputContainer!: ViewContainerRef;
