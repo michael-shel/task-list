@@ -1,0 +1,5 @@
+<section *ngFor="let task of tasks$ | async">
+  <a routerLink='{{task.id}}'>
+      <h1> {{task.name}} </h1>
+  </a>
+</section>

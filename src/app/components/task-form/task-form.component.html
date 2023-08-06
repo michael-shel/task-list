@@ -1,0 +1,15 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <input class="border" type="text" formControlName="name"/>
+    <select formControlName="type">
+        <option [ngValue]="null" disabled>Select Type</option>
+        <option *ngFor="let type of types" [ngValue]="type">{{type.id}}</option>
+    </select>
+
+<form [formGroup]="dynamicFormGroup" *ngIf="fields.length">
+    <div *ngFor="let field of fields">
+        <app-field-input [field]="field"></app-field-input>
+        <app-dynamic-error [fieldName]="field.fieldName"></app-dynamic-error>
+    </div>
+</form>
+<button type="submit">add</button>
+</form>
