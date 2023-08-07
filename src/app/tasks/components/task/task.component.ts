@@ -30,8 +30,14 @@ export class TaskComponent {
 
   async ngOnInit() {
     this.taskForm = new FormGroup({
-      name: new FormControl(''),
-      type: new FormControl(null),
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+      ]),
+      type: new FormControl(null, [
+        Validators.required,
+        Validators.nullValidator
+      ]),
     });
 
     this.taskForm.get("type").valueChanges
@@ -100,27 +106,51 @@ export class TaskComponent {
     return validators;
   }
 
-  onSubmit() {
-    for (const [key, value] of Object.entries(this.taskForm.get('type').value.fields)) {
-      if (value['type'] === 'number') {
-        this.dynamicFormGroup.value[key] = Number(this.dynamicFormGroup.value[key])
-      } else if (value['type'] === 'date') {
-        this.dynamicFormGroup.value[key] = new Date(this.dynamicFormGroup.value[key])
+  get name() { return this.taskForm.get('name'); }
+
+  get type() { return this.taskForm.get('type'); }
+
+  Validate() {
+    if (this.taskForm.invalid || this.dynamicFormGroup?.invalid) {
+      for (const control of Object.keys(this.taskForm.controls)) {
+        this.taskForm.controls[control].markAsTouched();
       }
+
+      if (this.dynamicFormGroup) {
+        for (const control of Object.keys(this.dynamicFormGroup.controls)) {
+          this.dynamicFormGroup.controls[control].markAsTouched();
+        }
+      }
+
+      return false
     }
 
-    let taskRequest: Task = {
-      name: this.taskForm.get('name').value,
-      type: this.taskForm.get('type').value.id,
-      fields: this.dynamicFormGroup.value
-    };
+    return true
+  }
 
-    if (this.task && this.route.snapshot.params['id'] === this.task._id) {
-      taskRequest._id = this.task._id;
-      console.log('taskRequest', taskRequest);
-      this.store.dispatch(updateTask({task: taskRequest}));
-    } else {
-      this.store.dispatch(addTask({task: taskRequest}));
+  onSubmit() {
+    if (this.Validate()) {
+      for (const [key, value] of Object.entries(this.taskForm.get('type').value.fields)) {
+        if (value['type'] === 'number') {
+          this.dynamicFormGroup.value[key] = Number(this.dynamicFormGroup.value[key])
+        } else if (value['type'] === 'date') {
+          this.dynamicFormGroup.value[key] = new Date(this.dynamicFormGroup.value[key])
+        }
+      }
+  
+      let taskRequest: Task = {
+        name: this.taskForm.get('name').value,
+        type: this.taskForm.get('type').value.id,
+        fields: this.dynamicFormGroup.value
+      };
+  
+      if (this.task && this.route.snapshot.params['id'] === this.task._id) {
+        taskRequest._id = this.task._id;
+
+        this.store.dispatch(updateTask({task: taskRequest}));
+      } else {
+        this.store.dispatch(addTask({task: taskRequest}));
+      }
     }
   }
 }

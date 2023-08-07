@@ -9,6 +9,7 @@ import { FormGroup, FormGroupDirective } from "@angular/forms";
 export class DynamicErrorComponent implements OnInit {
   formName: FormGroup;
   @Input() fieldName: string;
+  @Input() fieldLabel: string;
 
   constructor(private formgroupDirective: FormGroupDirective) {}
 

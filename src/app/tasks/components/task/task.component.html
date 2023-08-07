@@ -17,7 +17,10 @@
                 </label>
                 <input
                     class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    formControlName="name" type="text" placeholder="Enter task name">
+                    formControlName="name" type="text" placeholder="Enter task name" [class.border-red-400]="name.invalid && (name.dirty || name.touched)">
+                    <div class="text-sm font-semibold text-red-400" *ngIf="name.invalid && (name.dirty || name.touched)">
+                        * Task Name not valid
+                    </div>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="taskType">
@@ -25,16 +28,20 @@
                 </label>
                 <select
                     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    [class.border-red-400]="type.invalid && (type.dirty || type.touched)"
                     formControlName="type">
                     <option [ngValue]="null" disabled>Select Type</option>
                     <option *ngFor="let type of types" [ngValue]="type">{{type.id}}</option>
                 </select>
+                <div class="text-sm font-semibold text-red-400" *ngIf="type.invalid && (type.dirty || type.touched)">
+                    * Task Type not valid
+                </div>
             </div>
             <div class="mb-4">
                 <form [formGroup]="dynamicFormGroup" *ngIf="fields.length">
                     <div class="mb-4" *ngFor="let field of fields">
                         <app-field-input [field]="field"></app-field-input>
-                        <app-dynamic-error [fieldName]="field.fieldName"></app-dynamic-error>
+                        <app-dynamic-error [fieldLabel]="field.label" [fieldName]="field.fieldName"></app-dynamic-error>
                     </div>
                 </form>
             </div>
