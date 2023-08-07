@@ -1,0 +1,10 @@
+<form [formGroup]="formName">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="taskType">
+        {{field.label}}
+    </label>
+    <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    placeholder="Enter {{field.label}}"
+     [class.border-red-400]=" formName.controls[field.fieldName].invalid && (formName.controls[field.fieldName].dirty || formName.controls[field.fieldName].touched)"
+     [type]="field.type"
+     [formControlName]="field.fieldName"/>
+</form>
