@@ -1,5 +1,10 @@
 <div class="container mx-auto mt-10 px-8">
-    <h1 class="text-2xl font-bold mb-4">Add Task</h1>
+    <div class="flex justify-between mb-4 items-center">
+        <h2 class="text-2xl font-bold mb-4">{{labelCTA}}</h2>
+        <button routerLink='/tasks' class="border-gray-500 hover:bg-gray-300 border font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+          Back
+        </button>
+    </div>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="bg-white p-6 rounded shadow">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="taskName">
@@ -30,7 +35,7 @@
         </div>
         <div class="flex justify-end">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Add Task
+                {{labelCTA}}
             </button>
         </div>
     </form>

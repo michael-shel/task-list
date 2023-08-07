@@ -23,6 +23,6 @@ export class TasksService {
   }
 
   update(task: Task): Observable<{ task: Task }> {
-    return this.http.put<{task: Task}>(environment.apiUrl + 'tasks/' + task._id + '132321', task)
+    return this.http.put<{task: Task}>(environment.apiUrl + 'tasks/' + task._id, task)
   }
 }

@@ -16,6 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 export class TaskComponent {
   task$ = this.store.pipe(select(task));
   task: Task;
+  labelCTA: string = 'Add Task';
 
   constructor(private store: Store<TasksState>, private route: ActivatedRoute) { }
 
@@ -38,8 +39,10 @@ export class TaskComponent {
 
     this.task$.subscribe(task => {
       if (task) {
-        this.taskForm.get("name").setValue(task.name || '', { emitEvent: false });
-        this.taskForm.get("type").setValue(this.types.find(x => x.id === task.type), { emitEvent: true });
+        this.task = task;
+        this.labelCTA = 'Update Task';
+        this.taskForm.get("name").setValue(this.task.name || '', { emitEvent: false });
+        this.taskForm.get("type").setValue(this.types.find(x => x.id === this.task.type), { emitEvent: true });
       }
     });
   }
@@ -100,13 +103,18 @@ export class TaskComponent {
       }
     }
 
-    const task: Task = {
-      // _id: this.route.snapshot.params['id'],
+    let taskRequest: Task = {
       name: this.taskForm.get('name').value,
       type: this.taskForm.get('type').value.id,
       fields: this.dynamicFormGroup.value
     };
 
-    this.store.dispatch(addTask({task}));
+    if (this.task && this.route.snapshot.params['id'] === this.task._id) {
+      taskRequest._id = this.task._id;
+      console.log('taskRequest', taskRequest);
+      this.store.dispatch(updateTask({task: taskRequest}));
+    } else {
+      this.store.dispatch(addTask({task: taskRequest}));
+    }
   }
 }

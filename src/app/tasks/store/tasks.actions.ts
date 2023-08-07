@@ -43,7 +43,7 @@ export const updateTaskSuccess = createAction(
 );
 
 export const updateTaskFailure = createAction(
-  '[Todo API] Tasks Create Failure',
+  '[Todo API] Tasks Update Failure',
   props<{ error: string }>()
 );
 
