@@ -2,35 +2,19 @@ import { createReducer, on } from '@ngrx/store';
 import { Task } from '../models/task.interface';
 import * as TaskActions from './tasks.actions';
 import { RouterReducerState } from '@ngrx/router-store';
-import { EntityState, createEntityAdapter } from '@ngrx/entity';
 
-// export interface TasksState {
-//   isLoading?: boolean;
-//   error?: string | null;
-//   tasks?: Task[] | any;
-//   router?: RouterReducerState<any>;
-// }
-
-export interface TasksState extends EntityState<Task> {
+export interface TasksState {
   isLoading?: boolean;
   error?: string | null;
   tasks?: Task[] | any;
   router?: RouterReducerState<any>;
 }
 
-export const adapter = createEntityAdapter<Task>();
-
-// export const initialState: TasksState = adapter.getInitialState({
-//   tasks: [],
-//   error: null,
-//   isLoading: false,
-// });
-
-export const initialState: TasksState = adapter.getInitialState({
+export const initialState: TasksState = {
   error: null,
-  loading: false,
-  selectedId: null,
-});
+  isLoading: false,
+  tasks: []
+};
 
 export const tasksReducer = createReducer(
   // Supply the initial state
@@ -53,18 +37,12 @@ export const tasksReducer = createReducer(
   // Handle the task update
   on(TaskActions.updateTask, (state) => ({ ...state, isLoading: true })),
   // Handle the task update success
-  // on(TaskActions.updateTaskSuccess, (state, { task }) => ({
-  //   ...state,
-  //   tasks: state.tasks[state.tasks.findIndex(x => x._id === task.id)] = task.changes,
-  //   error: null,
-  //   isLoading: false
-  // })),
-  on(TaskActions.updateTaskSuccess, (state, { task }) =>
-    adapter.updateOne(
-      { id: Number(task.id), changes: task.changes },
-      { ...state, loading: false }
-    )
-  ),
+  on(TaskActions.updateTaskSuccess, (state, { task }) => ({
+    ...state,
+    tasks: [...state.tasks.filter((t) => t._id !== task._id), { ...task }],
+    error: null,
+    isLoading: false
+  })),
   // Handle the task update failure
   on(TaskActions.updateTaskFailure, (state, { error }) => ({
     ...state,

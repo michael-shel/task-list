@@ -38,8 +38,8 @@ export const updateTask = createAction(
 );
 
 export const updateTaskSuccess = createAction(
-  '[Todo API] Tasks Create Success',
-  props<{ task: Update<Task> }>()
+  '[Todo API] Tasks Update Success',
+  props<{ task: Task }>()
 );
 
 export const updateTaskFailure = createAction(
