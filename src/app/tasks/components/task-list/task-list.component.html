@@ -1,5 +1,6 @@
 <section *ngFor="let task of tasks$ | async">
-  <a routerLink='{{task.id}}'>
+  <a routerLink='{{task._id}}'>
       <h1> {{task.name}} </h1>
   </a>
+  <button (click)="onDeleteTask(task._id)">Delete</button>
 </section>

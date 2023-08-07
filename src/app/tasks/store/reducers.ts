@@ -13,7 +13,9 @@ import {
 
 export const reducers: ActionReducerMap<TasksState> = {
   tasks: tasksReducer,
-  router: routerReducer
+  router: routerReducer,
+  ids: undefined,
+  entities: undefined
 };
 
 const debugMeta = (reducer: ActionReducer<any>): ActionReducer<any> => {

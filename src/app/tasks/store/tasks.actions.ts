@@ -7,21 +7,6 @@ export const loadTasks = createAction(
   '[Task/API] Load Tasks',
 );
 
-export const addTask = createAction(
-  '[Task/API] Add Task',
-  props<{ task: Task }>()
-);
-
-export const updateTask = createAction(
-  '[Task/API] Update Task',
-  props<{ task: Update<Task> }>()
-);
-
-export const deleteTask = createAction(
-  '[Task/API] Delete Task',
-  props<{ id: number }>()
-);
-
 export const loadTasksSuccess = createAction(
   '[Todo API] Tasks Load Success',
   props<{ tasks: Task[] }>()
@@ -29,5 +14,50 @@ export const loadTasksSuccess = createAction(
 
 export const loadTasksFailure = createAction(
   '[Todo API] Tasks Load Failure',
+  props<{ error: string }>()
+);
+
+export const addTask = createAction(
+  '[Task/API] Add Task',
+  props<{ task: Task }>()
+);
+
+export const addTaskSuccess = createAction(
+  '[Todo API] Tasks Create Success',
+  props<{ task: Task }>()
+);
+
+export const addTaskFailure = createAction(
+  '[Todo API] Tasks Create Failure',
+  props<{ error: string }>()
+);
+
+export const updateTask = createAction(
+  '[Task/API] Update Task',
+  props<{ task: Task }>()
+);
+
+export const updateTaskSuccess = createAction(
+  '[Todo API] Tasks Create Success',
+  props<{ task: Update<Task> }>()
+);
+
+export const updateTaskFailure = createAction(
+  '[Todo API] Tasks Create Failure',
+  props<{ error: string }>()
+);
+
+export const deleteTask = createAction(
+  '[Task/API] Delete Task',
+  props<{ id: string }>()
+);
+
+export const deleteTasksSuccess = createAction(
+  '[Todo API] Tasks Delete Success',
+  props<{ id: string }>()
+);
+
+export const deleteTasksFailure = createAction(
+  '[Todo API] Tasks Delete Failure',
   props<{ error: string }>()
 );

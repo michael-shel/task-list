@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { task } from '../../store/tasks.selector';
+import { task, tasks } from '../../store/tasks.selector';
 import { TasksState } from '../../store/tasks.reducers';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Types } from '../../models/types';
 import { Task } from '../../models/task.interface';
+import { addTask, updateTask } from '../../store/tasks.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-task',
@@ -15,7 +17,7 @@ export class TaskComponent {
   task$ = this.store.pipe(select(task));
   task: Task;
 
-  constructor(private store: Store<TasksState>) { }
+  constructor(private store: Store<TasksState>, private route: ActivatedRoute) { }
 
   public dynamicFormGroup: FormGroup;
   public taskForm: FormGroup;
@@ -90,7 +92,21 @@ export class TaskComponent {
   }
 
   onSubmit() {
-    console.log(this.taskForm.value);
-    console.log(this.dynamicFormGroup.value);
+    for (const [key, value] of Object.entries(this.taskForm.get('type').value.fields)) {
+      if (value['type'] === 'number') {
+        this.dynamicFormGroup.value[key] = Number(this.dynamicFormGroup.value[key])
+      } else if (value['type'] === 'date') {
+        this.dynamicFormGroup.value[key] = new Date(this.dynamicFormGroup.value[key])
+      }
+    }
+
+    const task: Task = {
+      _id: this.route.snapshot.params['id'],
+      name: this.taskForm.get('name').value,
+      type: this.taskForm.get('type').value.id,
+      fields: this.dynamicFormGroup.value
+    };
+
+    this.store.dispatch(updateTask({task}));
   }
 }

@@ -32,7 +32,7 @@ export const task = createSelector(
   routeParams,
   // selectRouteParams,
   (tasks: Task[], { id }) => {
-    return tasks.filter((t) => t.id === Number(id))[0];
+    return tasks.filter((t) => t._id === (id))[0];
   }
 );
 
