@@ -19,6 +19,8 @@ import { DynamicInputComponent } from './components/dynamic-field/dynamic-input/
 import { DynamicFieldComponent } from './components/dynamic-field/dynamic-field.component';
 import { DynamicErrorComponent } from './components/dynamic-error/dynamic-error.component';
 import { IconsModule } from './icons/icons.module';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { IconsModule } from './icons/icons.module';
     StoreRouterConnectingModule.forRoot({
       serializer: RouterSerializer,
     }),
-    IconsModule
+    IconsModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],

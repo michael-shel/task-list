@@ -5,3 +5,32 @@
 body {
     @apply bg-gray-50;
 }
+
+.cdk-overlay-container:not(:has(.custom-confirm)) {
+    position: fixed; 
+    z-index: 1000;
+    top: 0;
+    right: 0;
+}
+
+.cdk-overlay-container:has(.custom-confirm) {
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: rgba(200, 200, 200, 0.5);
+}
+
+.success-snackbar {
+    @apply bg-green-500 text-white rounded;
+}
+
+.error-snackbar {
+    @apply bg-red-500 text-white rounded;
+}

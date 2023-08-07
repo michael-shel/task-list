@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
 
 import { TasksService } from '../services/tasks.service';
+import { NotificationService } from "../../services/notification.service";
 import {
   loadTasks,
   addTask,
@@ -18,14 +19,16 @@ import {
   updateTaskFailure
 } from './tasks.actions';
 import { from, of } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class TasksEffects {
 
   constructor(
     private actions$: Actions,
-    private service: TasksService) { }
+    private service: TasksService,
+    public notificationService: NotificationService,
+    private router: Router) { }
 
   // Run this code when a loadTasks action is dispatched
   loadTasks$ = createEffect(() =>
@@ -49,8 +52,14 @@ export class TasksEffects {
       ofType(deleteTask),
       switchMap((action) =>
         from(this.service.delete(action.id)).pipe(
-          map((tasks) => deleteTasksSuccess({ id: action.id })),
-          catchError((error) => of(deleteTasksFailure({ error })))
+          map((tasks) => {
+            this.notificationService.success("Task Deleted");
+            return deleteTasksSuccess({ id: action.id })
+          }),
+          catchError((error) => {
+            this.notificationService.error(error.status + ': ' + error.statusText);
+            return of(deleteTasksFailure({ error }))
+          })
         )
       )
     )
@@ -62,11 +71,15 @@ export class TasksEffects {
       ofType(addTask),
       mergeMap((action) => {
         return this.service.create(action.task).pipe(
-          map((data) => {
-            const task = { ...action.task, _id: uuidv4() };
-            return addTaskSuccess({ task });
+          map((data: any) => {
+            this.notificationService.success("Task Added");
+            this.router.navigate(['/tasks']);
+            return addTaskSuccess({ task: data });
           }),
-          catchError((error) => of(addTaskFailure({ error })))
+          catchError((error) => {
+            this.notificationService.error(error.status + ': ' + error.statusText);
+            return of(addTaskFailure({ error }))
+          })
         );
       })
     );
@@ -78,10 +91,15 @@ export class TasksEffects {
       ofType(updateTask),
       mergeMap((action) => {
         return this.service.update(action.task).pipe(
-          map((data) => {
-            return updateTaskSuccess({ task: action.task });
+          map((data: any) => {
+            this.notificationService.success("Task Updated");
+            this.router.navigate(['/tasks']);
+            return updateTaskSuccess({ task: data });
           }),
-          catchError((error) => of(updateTaskFailure({ error })))
+          catchError((error) => {
+            this.notificationService.error(error.status + ': ' + error.statusText);
+            return of(updateTaskFailure({ error }))
+          })
         );
       })
     );
