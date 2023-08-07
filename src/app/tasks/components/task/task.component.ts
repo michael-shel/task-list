@@ -101,12 +101,12 @@ export class TaskComponent {
     }
 
     const task: Task = {
-      _id: this.route.snapshot.params['id'],
+      // _id: this.route.snapshot.params['id'],
       name: this.taskForm.get('name').value,
       type: this.taskForm.get('type').value.id,
       fields: this.dynamicFormGroup.value
     };
 
-    this.store.dispatch(updateTask({task}));
+    this.store.dispatch(addTask({task}));
   }
 }

@@ -18,6 +18,7 @@ import { TaskComponent } from './tasks/components/task/task.component';
 import { DynamicInputComponent } from './components/dynamic-field/dynamic-input/dynamic-input.component';
 import { DynamicFieldComponent } from './components/dynamic-field/dynamic-field.component';
 import { DynamicErrorComponent } from './components/dynamic-error/dynamic-error.component';
+import { IconsModule } from './icons/icons.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DynamicErrorComponent } from './components/dynamic-error/dynamic-error.
     StoreRouterConnectingModule.forRoot({
       serializer: RouterSerializer,
     }),
+    IconsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

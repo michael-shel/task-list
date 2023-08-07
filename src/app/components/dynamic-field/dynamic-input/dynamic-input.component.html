@@ -1,4 +1,8 @@
 <form [formGroup]="formName">
-    <label>{{field.label}} : </label>
-    <input class="border" [type]="field.type" [formControlName]="field.fieldName"/>
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="taskType">
+        {{field.label}}
+    </label>
+    <input class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+     [type]="field.type" 
+     [formControlName]="field.fieldName"/>
 </form>
