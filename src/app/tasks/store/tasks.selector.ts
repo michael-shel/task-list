@@ -1,6 +1,4 @@
-// import { getSelectors, RouterReducerState } from '@ngrx/router-store';
-import * as fromRouter from '@ngrx/router-store';
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 import { Task } from 'src/app/tasks/models/task.interface';
 import { TasksState } from './tasks.reducers';
 
@@ -14,23 +12,11 @@ const routeParams = createSelector(
   (state) => state.params
 );
 
-// const selectRouter = createFeatureSelector<fromRouter.RouterReducerState>('router');
-
-// const {
-//   selectQueryParams,    // select the current route query params
-//   selectQueryParam,     // factory function to select a query param
-//   selectRouteParams,    // select the current route params
-//   selectRouteParam,     // factory function to select a route param
-//   selectRouteData,      // select the current route data
-//   selectUrl,            // select the current url
-// } = fromRouter.getRouterSelectors(selectRouter);
-
 export const tasks = createSelector((state: TasksState) => state.tasks, state => state.tasks);
 
 export const task = createSelector(
   taskSelector,
   routeParams,
-  // selectRouteParams,
   (tasks: Task[], { id }) => {
     return tasks.filter((t) => t._id === (id))[0];
   }
