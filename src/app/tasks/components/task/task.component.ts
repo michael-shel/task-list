@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { task, tasks } from '../../store/tasks.selector';
+import { isLoadingSelector, task, tasks } from '../../store/tasks.selector';
 import { TasksState } from '../../store/tasks.reducers';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Types } from '../../models/types';
@@ -16,6 +16,8 @@ import { ActivatedRoute } from '@angular/router';
 export class TaskComponent {
   task$ = this.store.pipe(select(task));
   task: Task;
+  loading$ = this.store.pipe(select(isLoadingSelector));
+  loading: boolean;
   labelCTA: string = 'Add Task';
 
   constructor(private store: Store<TasksState>, private route: ActivatedRoute) { }
@@ -44,6 +46,10 @@ export class TaskComponent {
         this.taskForm.get("name").setValue(this.task.name || '', { emitEvent: false });
         this.taskForm.get("type").setValue(this.types.find(x => x.id === this.task.type), { emitEvent: true });
       }
+    });
+
+    this.loading$.subscribe(isLoading => {
+      this.loading = isLoading
     });
   }
 

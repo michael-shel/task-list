@@ -12,7 +12,7 @@ export interface TasksState {
 
 export const initialState: TasksState = {
   error: null,
-  isLoading: false,
+  isLoading: true,
   tasks: []
 };
 

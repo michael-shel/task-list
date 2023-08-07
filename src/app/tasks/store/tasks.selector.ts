@@ -36,7 +36,7 @@ export const task = createSelector(
   }
 );
 
-export const isLoadingSelector = createSelector((state: TasksState) => state, state => state.isLoading);
+export const isLoadingSelector = createSelector((state: TasksState) => state, state => state.tasks.isLoading);
 
 export const errorSelector = createSelector((state: TasksState) => state, state => state.error);
 

@@ -21,6 +21,8 @@ import { DynamicErrorComponent } from './components/dynamic-error/dynamic-error.
 import { IconsModule } from './icons/icons.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     }),
     IconsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -5,38 +5,44 @@
           Back
         </button>
     </div>
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="bg-white p-6 rounded shadow">
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="taskName">
-                Task Name
-            </label>
-            <input
-                class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="name" type="text" placeholder="Enter task name">
-        </div>
-        <div class="mb-4">
-            <label class="block text-gray-700 text-sm font-bold mb-2" for="taskType">
-                Task Type
-            </label>
-            <select
-                class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                formControlName="type">
-                <option [ngValue]="null" disabled>Select Type</option>
-                <option *ngFor="let type of types" [ngValue]="type">{{type.id}}</option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <form [formGroup]="dynamicFormGroup" *ngIf="fields.length">
-                <div class="mb-4" *ngFor="let field of fields">
-                    <app-field-input [field]="field"></app-field-input>
-                    <app-dynamic-error [fieldName]="field.fieldName"></app-dynamic-error>
-                </div>
-            </form>
-        </div>
-        <div class="flex justify-end">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                {{labelCTA}}
-            </button>
-        </div>
-    </form>
+    <section *ngIf="loading" class="w-full flex justify-center mt-20">
+        <mat-spinner class="stroke-blue-500"></mat-spinner>
+    </section>
+
+    <section *ngIf="!loading">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="bg-white p-6 rounded shadow">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="taskName">
+                    Task Name
+                </label>
+                <input
+                    class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    formControlName="name" type="text" placeholder="Enter task name">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="taskType">
+                    Task Type
+                </label>
+                <select
+                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    formControlName="type">
+                    <option [ngValue]="null" disabled>Select Type</option>
+                    <option *ngFor="let type of types" [ngValue]="type">{{type.id}}</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <form [formGroup]="dynamicFormGroup" *ngIf="fields.length">
+                    <div class="mb-4" *ngFor="let field of fields">
+                        <app-field-input [field]="field"></app-field-input>
+                        <app-dynamic-error [fieldName]="field.fieldName"></app-dynamic-error>
+                    </div>
+                </form>
+            </div>
+            <div class="flex justify-end">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    {{labelCTA}}
+                </button>
+            </div>
+        </form>
+    </section>
 </div>

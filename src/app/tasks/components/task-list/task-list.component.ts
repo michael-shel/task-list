@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { tasks } from '../../store/tasks.selector';
+import { isLoadingSelector, tasks } from '../../store/tasks.selector';
 import { TasksState } from '../../store/tasks.reducers';
 import { deleteTask } from '../../store/tasks.actions';
 import { Types } from '../../models/types';
@@ -14,6 +14,7 @@ import { NotificationService } from "../../../services/notification.service";
 export class TaskListComponent{
   tasks$ = this.store.pipe(select(tasks));
   types = new Types().types;
+  loading$ = this.store.pipe(select(isLoadingSelector));
   
   constructor(private store: Store<TasksState>, public notificationService: NotificationService,) {}
 
